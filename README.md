@@ -6,3 +6,4 @@ To find more information about Advent of Code 2022 go [here](https://adventofcod
 
 ## Results
 - [Day 1](src/Day_One.py): :star: :star:
+- [Day 2](src/Day_Two.py): :star: :star:
