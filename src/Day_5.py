@@ -39,9 +39,9 @@ for stack_string in stack_strings:
             row.append('')
     stacks.append(row)
 
-print(stacks)
+# print(stacks)
 
-print(instruction_strings)
+# print(instruction_strings)
 instructions = []
 for s in instruction_strings:
     instruction = []
@@ -52,35 +52,100 @@ for s in instruction_strings:
     instructions.append(instruction)
 
 
-# for instruction in instructions:
-#     amount = instruction[0]
-#     start = instruction[1]
-#     end = instruction[2]
-#     for i in range(amount):
+for instruction in instructions:
+    amount = instruction[0]
+    start = instruction[1]
+    end = instruction[2]
+    for i in range(amount):
+        if stacks[0][start] != '':
+            crate = stacks[0][start]
+            stacks[0][start] = ''
+        else:
+            for x in range(len(stacks)):
+                if stacks[x][start] != '':
+                    crate = stacks[x][start]
+                    stacks[x][start] = ''
+                    break
+        for x in reversed(range(len(stacks))):
+            if stacks[x][end] == '':
+                stacks[x][end] = crate
+                crate = ''
+                break
+        if crate != '':
+            new_row = []
+            for _ in range(total_columns):
+                new_row.append('')
+            stacks.insert(0, new_row)
+            stacks[0][end] = crate
+
+top_crates = []
+
+for _ in range(total_columns):
+    top_crates.append('')
+
+
+for row in reversed(range(len(stacks))):
+    for column in range(len(stacks[row])):
+        if stacks[row][column] != '':
+            top_crates[column] = stacks[row][column]
+
+message = ''
+
+for crate in top_crates:
+    message += crate
+print(message)
+
+# Part 1 = SHMSDGZVC
+
+# instruction = instructions[0]
+# amount = instruction[0]
+# start = instruction[1]
+# end = instruction[2]
+# for i in range(amount):
+#     crate = stacks[0][start]
+#     stacks[0][start] = ''
+#     stacks[0][end] = crate
+#
+# print(stacks)
+#
+# instruction = instructions[1]
+# amount = instruction[0]
+# start = instruction[1]
+# end = instruction[2]
+# for i in range(amount):
+#     if stacks[0][start] != '':
 #         crate = stacks[0][start]
 #         stacks[0][start] = ''
+#     else:
+#         for x in range(len(stacks)):
+#             if stacks[x][start] != '':
+#                 crate = stacks[x][start]
+#                 stacks[x][start] = ''
+#                 break
+#     for x in reversed(range(len(stacks))):
+#         if stacks[x][end] == '':
+#             stacks[x][end] = crate
+#             crate = ''
+#             break
+#     if crate != '':
+#         new_row = []
+#         for _ in range(total_columns):
+#             new_row.append('')
+#         stacks.insert(0, new_row)
 #         stacks[0][end] = crate
+#
+# print(stacks)
 
-instruction = instructions[0]
-amount = instruction[0]
-start = instruction[1]
-end = instruction[2]
-for i in range(amount):
-    crate = stacks[0][start]
-    stacks[0][start] = ''
-    stacks[0][end] = crate
+#
+# for row in reversed(range(len(stacks))):
+#     clear_row = True
+#     for column in reversed(range(len(stacks[row]))):
+#         if stacks[row][column] != '':
+#             clear_row = False
+#             break
+#     if clear_row:
+#         stacks.pop(row)
+#
+# print(stacks)
 
-print(stacks)
-
-instruction = instructions[1]
-amount = instruction[0]
-start = instruction[1]
-end = instruction[2]
-for i in range(amount):
-    crate = stacks[0][start]
-    stacks[0][start] = ''
-
-    stacks[0][end] = crate
-
-print(stacks)
 
