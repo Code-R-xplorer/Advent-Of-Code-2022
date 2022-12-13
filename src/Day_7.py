@@ -1,6 +1,6 @@
 from utils import read_file
 
-values = read_file(7, str, True)
+values = read_file(7, str, False)
 
 
 class Node:
@@ -23,11 +23,13 @@ class Node:
             size += child.calculate_size()
         return size
 
-    def __repr__(self):
-        if self.is_dir:
-            return f'{f"/{self.name}"}" children={self.children} size={self.calculate_size()}>'
+    def sum_size(self, threshold):
+        if not self.is_dir:
+            return 0
+        elif self.calculate_size() <= threshold:
+            return self.calculate_size() + sum(child.sum_size(threshold) for child in self.children)
         else:
-            return f'{self.name}" size={self.size}>'
+            return sum(child.sum_size(threshold) for child in self.children)
 
 
 # Build File System
@@ -61,6 +63,10 @@ for value in values:
         current.add_child(node)
     # Line is a file
     else:
-        node = Node(line[1], int(line[0]), True)
+        node = Node(line[1], int(line[0]), False)
         current.add_child(node)
+
+print("Part 1: " + str(root.sum_size(100000)))
+# Part 1: 1423358
+
 
