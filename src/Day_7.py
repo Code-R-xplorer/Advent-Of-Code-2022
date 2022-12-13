@@ -31,6 +31,15 @@ class Node:
         else:
             return sum(child.sum_size(threshold) for child in self.children)
 
+    def get_larger_than(self, threshold):
+        if not self.is_dir:
+            return None
+        elif self.calculate_size() >= threshold:
+            return [self.calculate_size()] + [child.get_larger_than(threshold) for child in self.children if
+                                              child.get_larger_than(threshold)]
+        else:
+            return None
+
 
 # Build File System
 root = Node('/', 0, True)
@@ -66,7 +75,22 @@ for value in values:
         node = Node(line[1], int(line[0]), False)
         current.add_child(node)
 
-print("Part 1: " + str(root.sum_size(100000)))
+# print("Part 1: " + str(root.sum_size(100000)))
 # Part 1: 1423358
 
+total_disk_size = 70000000
+update_size = 30000000
 
+needed_space = update_size - (total_disk_size - root.calculate_size())
+
+
+def flatten(S):
+    if S == []:
+        return S
+    if isinstance(S[0], list):
+        return flatten(S[0]) + flatten(S[1:])
+    return S[:1] + flatten(S[1:])
+
+
+directory_candidates = flatten(root.get_larger_than(needed_space))
+print(min(directory_candidates))
