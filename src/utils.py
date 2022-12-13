@@ -1,7 +1,7 @@
 import os
 
 
-def read_file(day: int, transform, use_test = False, strip_line = True) -> list:
+def read_file(day: int, transform=str, use_test = False, strip_line = True) -> list:
     try:
         if use_test:
             with open(os.path.join(os.path.normpath(os.getcwd() + os.sep + os.pardir), 'Input_Files', f'day_{day}_test.txt')) as f:
